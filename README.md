@@ -43,3 +43,49 @@ Print the accuracy
 
 
  PROGRAM:
+
+ import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+class Perceptron:
+    def __init__(self,learning_rate=0.1):
+        self.learning_rate = learning_rate
+        self._b = 0.0  #y-intercept
+        self._w = None # weights assigned to input features
+        self.misclassified_samples = []
+    def fit(self, x: np.array, y: np.array, n_iter=10):
+        self._b = 0.0
+        self._w = np.zeros(x.shape[1])
+        self.misclassified_samples = []
+        for _ in range(n_iter):
+            # counter of the errors during this training interaction
+            errors = 0
+            for xi, yi in zip(x,y):
+                update = self.learning_rate * (yi - self.predict(xi))
+                self._b += update
+                self._w += update * xi
+                errors += int(update != 0.0)
+            self.misclassified_samples.append(errors)
+    def f(self, x: np.array) -> float:
+        return np.dot(x, self._w) + self._b
+    def predict(self, x: np.array):
+        return np.where(self.f(x) >= 0,1,-1)
+
+df = pd.read_csv('IRIS.csv')
+print(df.head())
+
+https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#extract-the-label-column
+
+https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#extract-features
+
+https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#reduce-dimensionality-of-the-data
+
+https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#plot-iris-setosa-samples
+
+https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#map-the-labels-to-a-binary-integer-value
+
+https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#split-the-data

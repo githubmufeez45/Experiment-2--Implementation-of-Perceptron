@@ -43,7 +43,7 @@ Print the accuracy
 
 
  PROGRAM:
-
+```
  import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -77,15 +77,82 @@ class Perceptron:
 
 df = pd.read_csv('IRIS.csv')
 print(df.head())
+```
+# extract the label column:
+```
+ y = df.iloc[:,4].values
+```
+# extract features
+```x = df.iloc[:,0:3].values```
 
-https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#extract-the-label-column
+# reduce dimensionality of the data
+```
+ x = x[0:100, 0:2]
+y = y[0:100]
 
-https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#extract-features
+```
+# plot Iris Setosa samples
 
-https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#reduce-dimensionality-of-the-data
+```
 
-https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#plot-iris-setosa-samples
+plt.scatter(x[:50,0], x[:50,1], color='orange', marker='o', label='Setosa')
+#plot Iris Versicolour samples
+plt.scatter(x[50:100,0], x[50:100,1], color='blue', marker='x', label='Versicolour')
+#show the legend
+plt.xlabel("Sepal length")
+plt.ylabel("Petal length")
+plt.legend(loc='upper left')
+#show the plot
+plt.show()
 
-https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#map-the-labels-to-a-binary-integer-value
+```
+# map the labels to a binary integer value
 
-https://github.com/arun1111j/Experiment-2--Implementation-of-Perceptron#split-the-data
+```
+y = np.where(y == 'Iris-Setosa',1,-1)
+x[:,0] = (x[:,0] - x[:,0].mean()) / x[:,0].std()
+x[:,1] = (x[:,1] - x[:,1].mean()) / x[:,1].std()
+
+```
+# split the data
+
+```
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25,random_state=0)
+
+```
+# train the model
+
+```
+classifier = Perceptron(learning_rate=0.01)
+classifier.fit(x_train, y_train)
+print("accuracy",accuracy_score(classifier.predict(x_test),y_test)*100)
+```
+
+# plot the number of errors during each iteration
+
+```
+plt.plot(range(1,len(classifier.misclassified_samples)+1),classifier.misclassified_samples, marker='o')
+plt.xlabel('Epoch')
+plt.ylabel('Errors')
+plt.show()
+```
+
+# OUTPUT:
+
+# DATASET:
+![274559514-23750308-3eb2-4b9a-9c49-2aeff0ed0b67](https://github.com/githubmufeez45/Experiment-2--Implementation-of-Perceptron/assets/134826568/625af74b-6bd2-4ffe-8d0b-b8db50089095)
+
+# SCATTER PLOT:
+
+![274559640-8e3aa585-3aea-4d9b-9cf9-97f2e953f8f1](https://github.com/githubmufeez45/Experiment-2--Implementation-of-Perceptron/assets/134826568/c06842bd-0216-4f80-8393-f42aecd961d0)
+
+# ERROR PLOT:
+![274559769-3dc0c66f-77a4-4c55-b4b0-98f3421d460f](https://github.com/githubmufeez45/Experiment-2--Implementation-of-Perceptron/assets/134826568/f7b2e210-5cd5-4639-88d8-99614196b774)
+
+# ACCURACY:
+
+![274559936-e7546af4-32f4-4125-b4d5-bd7ab89fa6f1](https://github.com/githubmufeez45/Experiment-2--Implementation-of-Perceptron/assets/134826568/307db7d0-1cb4-4b1d-bcde-723f942e9f68)
+
+# RESULT:
+Thus a perceptron for classification is implemented using python.
+

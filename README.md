@@ -23,7 +23,7 @@ Indeed if the neuron output is exactly zero it cannot be assumed that the sample
 
 
 ## ALGORITHM:
-
+~~~
 1. Importing the libraries
 2.Importing the dataset
 3.Plot the data to verify the linear separable dataset and consider only two classes
@@ -43,7 +43,7 @@ Indeed if the neuron output is exactly zero it cannot be assumed that the sample
         
 11.Plot the error for each iteration 
 12.Print the accuracy
-
+~~~
 
 # PROGRAM:
 ```
